@@ -1,5 +1,5 @@
-import React, { CSSProperties } from 'react';
-
+import React from 'react';
+import type { CSSProperties } from 'react';
 const Accomplishments: React.FC = () => {
   // --- STYLES ---
   const styles: { [key: string]: CSSProperties } = {

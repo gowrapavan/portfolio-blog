@@ -1,0 +1,36 @@
+name: Agentic Dev Logger
+
+on:
+  push:
+    branches:
+      - main # Triggers when you push to main
+
+jobs:
+  generate-log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # We need the last 2 commits to get the diff
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Get Git Diff
+        id: git-diff
+        # Grabs the changes, ignores package-lock.json to save LLM tokens
+        run: |
+          DIFF=$(git diff HEAD^ HEAD -- . ':(exclude)package-lock.json' ':(exclude)yarn.lock')
+          echo "diff<<EOF" >> $GITHUB_ENV
+          echo "$DIFF" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Run AI Logger Script
+        env:
+          # You will store your API key in GitHub Repository Secrets
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} 
+          GIT_DIFF: ${{ env.diff }}
+        run: node scripts/generate-log.js

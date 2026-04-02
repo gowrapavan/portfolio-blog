@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Posts from './pages/Posts';
 import Post from './pages/Post';
 import ScrollToTop from './components/ScrollToTop';
+import ChatBot from './components/ChatBot';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
           <Route path="/posts/:id" element={<Post />} />
         </Routes>
       </main>
-      
+                <ChatBot />
+
       <Footer />
     </div>
   );

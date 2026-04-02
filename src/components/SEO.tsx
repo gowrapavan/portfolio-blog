@@ -12,7 +12,7 @@ const SEO = ({ title, description, image, url, type = 'website' }: SEOProps) => 
   const siteTitle = "Gowra's Blog";
   const defaultDescription = "Portfolio and Personal Blog of Gowra Pavan Kumar - Software Engineer & Full Stack Developer.";
   const defaultImage = "https://avatars.githubusercontent.com/u/160145497?v=4"; 
-  const siteUrl = window.location.origin; // Automatically gets your site URL
+  // FIX: Removed unused siteUrl variable
 
   return (
     <Helmet>

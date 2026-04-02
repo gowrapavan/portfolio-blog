@@ -1,4 +1,6 @@
-import React, { CSSProperties, useState, useEffect } from 'react';
+// For your second file:
+import React, { useState, useEffect } from 'react';
+import type { CSSProperties } from 'react';
 import { FaGithub, FaLinkedin, FaPhone, FaEnvelope } from 'react-icons/fa';
 import { SiResearchgate } from 'react-icons/si';
 import { Link } from 'react-router-dom';

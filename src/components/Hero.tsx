@@ -1,14 +1,10 @@
 import { 
   FaGithub, 
   FaLinkedin, 
-  FaTwitter, 
-  FaFacebook, 
-  FaStackOverflow, 
-  FaMastodon,
+
   FaPhone
 } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import { SiResearchgate } from 'react-icons/si';
 import { useState, useEffect } from 'react';
 
 const Hero = () => {

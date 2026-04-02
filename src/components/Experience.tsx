@@ -1,5 +1,5 @@
-import React, { CSSProperties, useState } from 'react';
-
+import React, { useState } from 'react';
+import type { CSSProperties } from 'react';
 const Experience: React.FC = () => {
   const styles: { [key: string]: CSSProperties } = {
     section: {

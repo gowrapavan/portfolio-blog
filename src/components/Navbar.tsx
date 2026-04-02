@@ -17,7 +17,8 @@ interface NavbarProps {
 
 const Navbar = ({ onToggleSidebar }: NavbarProps) => {
   const [activeSection, setActiveSection] = useState<string>('home');
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  // FIX: Removed setHoveredLink since it is unused
+  const [hoveredLink] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,20 +43,17 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
     container: {
       maxWidth: '1200px',
       margin: '0 auto',
-      // FIX: Reduced left padding on mobile to move content to the edge
       padding: isMobile ? '0 0.75rem' : '0 1.5rem',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       height: '100%', 
     },
-    // Left Group: Toggle + Logo
     leftGroup: {
       display: 'flex',
       alignItems: 'center',
-      gap: '0.5rem', // Tighter gap for alignment
+      gap: '0.5rem',
     },
-    // Sidebar Toggle Button
     sidebarToggleBtn: {
       display: isMobile && isPostsPage ? 'flex' : 'none',
       alignItems: 'center',
@@ -66,7 +64,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
       border: 'none',
       cursor: 'pointer',
       padding: '4px',
-      marginLeft: '-4px', // Pulls icon slightly left
+      marginLeft: '-4px', 
     },
     logoGroup: {
       display: 'flex',
@@ -76,12 +74,11 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
       color: 'inherit',
       zIndex: 60,
     },
-    // FIX: Updated Logo Style for Image
     logoIcon: {
       height: '28px',
       width: '28px',
       borderRadius: '50%',
-      objectFit: 'cover' as const, // Ensures image isn't distorted
+      objectFit: 'cover' as const, 
       display: 'block',
     },
     logoText: {
@@ -123,7 +120,6 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
       zIndex: 55,
     },
-    // Link Styles
     link: {
       textDecoration: 'none',
       color: '#475569',
@@ -183,7 +179,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       if (location.pathname !== '/') return;
-      // Scroll logic
+      
       let maxVisibility = 0;
       let currentSection = activeSection;
       navLinks.forEach((link) => {
@@ -238,7 +234,6 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
     <nav style={styles.nav}>
       <div style={styles.container}>
         
-        {/* Left Group: Toggle + Logo */}
         <div style={styles.leftGroup}>
           <button 
             style={styles.sidebarToggleBtn} 
@@ -248,7 +243,6 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
           </button>
 
           <Link to="/" style={styles.logoGroup} onClick={(e) => handleNavClick(e, '/')}>
-            {/* FIX: Image Logo */}
             <img 
               src="https://avatars.githubusercontent.com/u/160145497?v=4" 
               alt="Gowra Pavan Kumar" 

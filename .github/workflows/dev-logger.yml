@@ -3,7 +3,7 @@ name: Agentic Dev Logger
 on:
   push:
     branches:
-      - main # Triggers when you push to main
+      - main
 
 jobs:
   generate-log:
@@ -12,16 +12,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # We need the last 2 commits to get the diff
+          fetch-depth: 2
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          # NEW: This caches your dependencies so it's faster next time
+          cache: 'npm'
+
+      # NEW: This installs @supabase/supabase-js on the GitHub runner
+      - name: Install dependencies
+        run: npm install
 
       - name: Get Git Diff
         id: git-diff
-        # Grabs the changes, ignores package-lock.json to save LLM tokens
         run: |
           DIFF=$(git diff HEAD^ HEAD -- . ':(exclude)package-lock.json' ':(exclude)yarn.lock')
           echo "diff<<EOF" >> $GITHUB_ENV
@@ -30,6 +35,8 @@ jobs:
 
       - name: Run AI Logger Script
         env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }} # Changed this line
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           GIT_DIFF: ${{ env.diff }}
         run: node scripts/generate-log.js

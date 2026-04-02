@@ -30,7 +30,6 @@ jobs:
 
       - name: Run AI Logger Script
         env:
-          # You will store your API key in GitHub Repository Secrets
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} 
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }} # Changed this line
           GIT_DIFF: ${{ env.diff }}
         run: node scripts/generate-log.js

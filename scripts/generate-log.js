@@ -39,6 +39,19 @@ async function generateDevLog() {
     });
 
     const data = await response.json();
+
+    // NEW: Check if the API threw an error (like an invalid key, bad request, etc.)
+    if (data.error) {
+      console.error("🚨 Google API Error:", JSON.stringify(data.error, null, 2));
+      process.exit(1);
+    }
+
+    // NEW: Check if candidates are missing (safety block to prevent the 'undefined' crash)
+    if (!data.candidates || data.candidates.length === 0) {
+      console.error("🚨 No candidates returned. Full response:", JSON.stringify(data, null, 2));
+      process.exit(1);
+    }
+
     const generatedLog = data.candidates[0].content.parts[0].text;
 
     // 4. Output the result

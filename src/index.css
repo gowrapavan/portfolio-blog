@@ -11,8 +11,6 @@ html, body {
   overflow-x: hidden; /* Prevents horizontal scroll on the entire page */
   font-family: 'Inter', sans-serif;
 }
-
-
 #root {
   width: 100%;
   min-height: 100vh;

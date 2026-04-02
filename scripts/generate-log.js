@@ -14,7 +14,7 @@ async function generateDevLog() {
     process.exit(1);
   }
 
-  console.log("Analyzing Git Diff with Groq (Llama 3)...");
+  console.log("Analyzing Git Diff with Groq (Llama 3.1)...");
 
   const systemPrompt = `You are an expert technical writer. I am going to provide you with a raw git diff. 
   Your job is to translate this code change into a professional, 1-2 sentence developer log entry. 
@@ -29,7 +29,8 @@ async function generateDevLog() {
         'Content-Type': 'application/json' 
       },
       body: JSON.stringify({
-        model: 'llama3-8b-8192', // Super fast, free open-source model
+        // 🛑 FIXED: Updated to the currently supported Llama 3.1 model 🛑
+        model: 'llama-3.1-8b-instant', 
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: `Here is the git diff:\n${diff}` }

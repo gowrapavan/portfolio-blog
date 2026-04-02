@@ -287,5 +287,40 @@ We didn't just write code; we prepared the site for the real world. Every single
 
 We also built a dynamic \`sitemap.ts\` that automatically updates when we add new products, and a \`robots.ts\` file that acts as a firewall to keep Google out of our private admin pages.
     `
+  },
+  {
+    id: "agentic-portfolio-ai-chatbot",
+    title: "Building an Agentic Portfolio: AI Chatbot & Automated Dev Logs",
+    excerpt: "How I turned my static portfolio into a living AI agent using GitHub Actions, Groq (Llama 3.1), and Supabase.",
+    date: "Apr 02, 2026",
+    readTime: "6 min read",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop",
+    tags: ["AI", "Supabase", "Automation", "React"],
+    content: `
+Most developer portfolios are static. I wanted to build something dynamic—a portfolio that automatically updates itself and can actually *talk* to recruiters. 
+
+Here is how I engineered an **Agentic Portfolio** with an automated Dev Logger pipeline and an interactive AI twin.
+
+## Phase 1: The Automated AI Dev Logger
+I wanted a system that writes my work updates for me. I built a custom **GitHub Action** that triggers every time I push code to my repository. 
+* It extracts the raw \`git diff\` from the commit.
+* It sends that code diff to the **Groq API** running the blazing-fast \`Llama-3.1-8b-instant\` model.
+* The AI acts as a technical writer, translating the raw code changes into a punchy, professional 1-sentence developer log.
+
+## Phase 2: The Memory Bank (Supabase)
+To give my AI a permanent memory, I integrated **Supabase**. Instead of just printing the generated logs to the console, my GitHub Action uses the Supabase JavaScript client and a secure Service Role Key to insert the log directly into a \`dev_logs\` PostgreSQL table. 
+
+Now, I have an automated, database-backed timeline of my exact technical growth, completely hands-free.
+
+## Phase 3: The Recruiter Chatbot (Frontend)
+To make this data interactive, I built a custom React Chatbot component that sits in the corner of my portfolio. 
+
+When a recruiter asks a question:
+1. The frontend securely fetches the most recent logs from Supabase using a public read-only policy.
+2. It injects those logs as "System Context" into a fresh Groq API call.
+3. The AI answers the recruiter's questions based *strictly* on my actual, verified code pushes and project history.
+
+This entirely custom architecture transforms a standard static website into a living, breathing AI agent that can interview *for* me 24/7.
+`
   }
 ];

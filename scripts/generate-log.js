@@ -1,5 +1,5 @@
 // scripts/generate-log.js
-const { createClient } = require('@supabase/supabase-js');
+import { createClient } from '@supabase/supabase-js';
 
 async function generateDevLog() {
   // 1. Grab all Environment Variables

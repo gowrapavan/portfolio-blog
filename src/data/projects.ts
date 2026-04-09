@@ -6,6 +6,7 @@ export interface Project {
   tech: string[];
   link?: string;
   github?: string;
+  tags?: string[];
 }
 
 export const projects: Project[] = [

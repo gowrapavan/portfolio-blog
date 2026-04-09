@@ -1,34 +1,35 @@
 import React, { useState } from 'react';
 import type { CSSProperties } from 'react';
+
 const Experience: React.FC = () => {
+  const primaryBlue = '#0284c7'; // Matching the Navbar & Hero
+  
   const styles: { [key: string]: CSSProperties } = {
     section: {
-      padding: '2rem 0', 
-      backgroundColor: '#f9fafb', 
-      fontFamily: '"Inter", sans-serif',
-      color: '#1f2937',
+      padding: '4rem 0 6rem', 
+      backgroundColor: '#f8fafc', // Very subtle slate background to contrast with white Hero
+      fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif',
+      color: '#1e293b',
     },
     container: {
       maxWidth: '1100px',
       margin: '0 auto',
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-      // FIX: Split gap. Reduced rowGap (vertical) to 2rem to close the bottom space.
-      columnGap: '4rem', 
-      rowGap: '2rem',     
+      gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+      columnGap: '5rem', 
+      rowGap: '3rem',     
       padding: '0 1.5rem',
     },
-    // Main Header Style
     mainHeader: {
       gridColumn: '1 / -1', 
       textAlign: 'center' as const,
       fontSize: '2.5rem',
       fontWeight: 800,
-      color: '#111827',
-      // FIX: Removed default browser margins to close the top gap
+      color: '#0f172a',
       marginTop: 0,
-      marginBottom: 0, 
+      marginBottom: '1rem', 
       lineHeight: 1.2,
+      letterSpacing: '-0.025em',
     },
     column: {
       display: 'flex',
@@ -39,64 +40,68 @@ const Experience: React.FC = () => {
       fontWeight: 700,
       textTransform: 'uppercase',
       letterSpacing: '0.1em',
-      color: '#0891b2',
-      marginBottom: '1.5rem', // Slightly increased for visual balance
+      color: primaryBlue,
+      marginBottom: '2rem', 
       display: 'flex',
       alignItems: 'center',
       gap: '0.75rem',
     },
     line: {
-      width: '24px', 
+      width: '30px', 
       height: '2px', 
-      background: '#0891b2' 
+      background: primaryBlue,
+      borderRadius: '2px',
     },
-    item: {
+    itemWrapper: {
       position: 'relative',
-      paddingLeft: '2rem',
-      borderLeft: '1px solid #e5e7eb',
+      paddingLeft: '2.5rem',
+      borderLeft: '2px solid #e2e8f0',
       paddingBottom: '3rem',
-      transition: 'all 0.3s ease',
+      transition: 'border-color 0.3s ease',
     },
     dot: {
       position: 'absolute',
-      left: '-5px',
-      top: '0.5rem',
-      width: '9px',
-      height: '9px',
+      left: '-6px',
+      top: '0.25rem',
+      width: '10px',
+      height: '10px',
       borderRadius: '50%',
-      backgroundColor: '#0891b2',
-      boxShadow: '0 0 0 4px #fff',
-      border: '1px solid #0891b2',
-      transition: 'transform 0.3s ease',
+      backgroundColor: '#cbd5e1',
+      boxShadow: '0 0 0 6px #f8fafc',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       zIndex: 1,
+    },
+    contentBox: {
+      transition: 'transform 0.3s ease',
     },
     roleTitle: {
       fontSize: '1.25rem',
       fontWeight: 700,
-      color: '#111827',
-      marginBottom: '0.5rem',
+      color: '#0f172a',
+      marginBottom: '0.25rem',
+      transition: 'color 0.2s ease',
     },
     meta: {
-      fontSize: '0.875rem',
-      color: '#6b7280',
-      marginBottom: '1rem',
-      fontFamily: '"JetBrains Mono", monospace',
+      fontSize: '0.85rem',
+      color: '#64748b',
+      marginBottom: '0.75rem',
       fontWeight: 500,
     },
     desc: {
       fontSize: '0.95rem',
-      color: '#4b5563',
-      lineHeight: '1.6',
+      color: '#475569',
+      lineHeight: '1.7',
     },
   };
 
   const TimelineItem = ({ title, meta, desc, isLast }: { title: string, meta: string, desc?: string, isLast?: boolean }) => {
     const [isHovered, setIsHovered] = useState(false);
+    
     return (
       <div 
         style={{
-          ...styles.item,
-          borderLeftColor: isLast ? 'transparent' : (isHovered ? '#0891b2' : '#e5e7eb'),
+          ...styles.itemWrapper,
+          borderLeftColor: isLast ? 'transparent' : (isHovered ? primaryBlue : '#e2e8f0'),
           borderLeftStyle: isLast ? 'none' : 'solid',
         }}
         onMouseEnter={() => setIsHovered(true)}
@@ -104,23 +109,33 @@ const Experience: React.FC = () => {
       >
         <div style={{
           ...styles.dot,
-          transform: isHovered ? 'scale(1.3)' : 'scale(1)',
-          backgroundColor: isHovered ? '#0891b2' : '#fff',
+          transform: isHovered ? 'scale(1.4)' : 'scale(1)',
+          backgroundColor: isHovered ? primaryBlue : '#cbd5e1',
+          boxShadow: isHovered ? `0 0 0 6px rgba(2, 132, 199, 0.15)` : '0 0 0 6px #f8fafc',
         }}></div>
-        <h3 style={styles.roleTitle}>{title}</h3>
-        <p style={styles.meta}>{meta}</p>
-        {desc && <p style={styles.desc}>{desc}</p>}
+        
+        <div style={{
+          ...styles.contentBox,
+          transform: isHovered ? 'translateX(8px)' : 'translateX(0)',
+        }}>
+          <h3 style={{
+            ...styles.roleTitle,
+            color: isHovered ? primaryBlue : '#0f172a'
+          }}>{title}</h3>
+          <p style={styles.meta}>{meta}</p>
+          {desc && <p style={styles.desc}>{desc}</p>}
+        </div>
       </div>
     );
   };
 
   return (
-    <section style={styles.section}>
+    <section id="experience" style={styles.section}>
       <div style={styles.container}>
         
-        {/* Main "CAREER" Header centered */}
-        <h2 style={styles.mainHeader}>Career</h2>
+        <h2 style={styles.mainHeader}>Career & Education</h2>
 
+        {/* Experience Column */}
         <div style={styles.column}>
           <div style={styles.subHeader}>
             <span style={styles.line}></span> EXPERIENCE
@@ -130,8 +145,15 @@ const Experience: React.FC = () => {
             meta="Freelance / Projects • 2024 – Present"
             desc="Developing full-stack web applications with a focus on performance. Specializing in React, Next.js, and backend integration. Implemented CI/CD pipelines via GitHub Actions."
           />
+          <TimelineItem 
+            title="AWS Cloud Banking Analytics"
+            meta="Virtual Internship • Dec 2024 – Mar 2025"
+            desc="Explored cloud infrastructure and analytics tools, gaining hands-on experience with AWS services tailored for financial data processing."
+            isLast={true}
+          />
         </div>
 
+        {/* Education Column */}
         <div style={styles.column}>
           <div style={styles.subHeader}>
             <span style={styles.line}></span> EDUCATION

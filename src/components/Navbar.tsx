@@ -266,7 +266,8 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
             </a>
           ))}
           <div style={styles.divider}></div>
-          {['Posts', 'Notes', 'Docs'].map((page) => (
+          {/* Changed 'Notes' to 'Logs' here */}
+          {['Posts', 'Logs', 'Docs'].map((page) => (
             <Link key={page} to={`/${page.toLowerCase()}`} style={getLinkStyle(page, `/${page.toLowerCase()}`)}>
               {page}
             </Link>
@@ -281,7 +282,8 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
               </a>
             ))}
             <div style={{ width: '100%', height: '1px', backgroundColor: '#e2e8f0', margin: '0.5rem 0' }}></div>
-            {['Posts', 'Notes', 'Docs'].map((page) => (
+            {/* Changed 'Notes' to 'Logs' here too */}
+            {['Posts', 'Logs', 'Docs'].map((page) => (
               <Link key={page} to={`/${page.toLowerCase()}`} style={getLinkStyle(page, `/${page.toLowerCase()}`, undefined, true)} onClick={() => setIsMenuOpen(false)}>
                 {page}
               </Link>

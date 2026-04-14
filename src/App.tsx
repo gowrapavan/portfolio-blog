@@ -10,7 +10,7 @@ import ScrollToTop from './components/ScrollToTop';
 import ChatBot from './components/ChatBot';
 import Ziloplay from './pages/Ziloplay';
 import Goal4u from './pages/Goal4u';
-
+import Logs from './pages/Logs'; // Adjust this path to wherever you saved Logs.tsx
 function App() {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-blue-100 selection:text-blue-900 flex flex-col">
@@ -27,6 +27,7 @@ function App() {
           <Route path="/posts/:id" element={<Post />} />
           <Route path="/ziloplay" element={<Ziloplay />} />
           <Route path="/goal4u" element={<Goal4u />} />
+          <Route path="/logs" element={<Logs />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

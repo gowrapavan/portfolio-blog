@@ -5,7 +5,7 @@ export interface Post {
   id: string;
   title: string;
   category?: string;
-  [key: string]: any; 
+  [key: string]: any;
 }
 
 interface SidebarProps {
@@ -13,7 +13,6 @@ interface SidebarProps {
   activePostId?: string;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  // NEW: Props for mobile drawer control
   isOpen?: boolean;
   onClose?: () => void;
 }
@@ -26,29 +25,28 @@ const Sidebar = ({ posts, activePostId, searchQuery, setSearchQuery, isOpen, onC
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 900;
 
   const styles = {
-    // --- YOUR EXACT DESKTOP STYLE (Unchanged) ---
     container: {
       position: 'sticky' as const,
       top: '100px',
       height: '100%',
       display: 'flex',
       flexDirection: 'column' as const,
-      gap: '1.5rem',
+      gap: '1.25rem',
       overflowY: 'auto' as const,
       scrollbarWidth: 'none' as const,
       msOverflowStyle: 'none' as const,
-      paddingRight: '1rem',
+      paddingRight: '0.5rem',
       width: '100%',
       overflowX: 'hidden' as const,
     },
-    // --- NEW: Mobile Drawer Styles ---
     mobileOverlay: {
       position: 'fixed' as const,
-      top: '50px', // Below navbar
+      top: '50px',
       left: 0,
       width: '100vw',
       height: 'calc(100vh - 50px)',
-      backgroundColor: 'rgba(0,0,0,0.4)',
+      backgroundColor: 'rgba(15, 23, 42, 0.35)',
+      backdropFilter: 'blur(2px)',
       zIndex: 40,
       display: isOpen ? 'block' : 'none',
     },
@@ -56,91 +54,86 @@ const Sidebar = ({ posts, activePostId, searchQuery, setSearchQuery, isOpen, onC
       position: 'fixed' as const,
       top: '50px',
       left: 0,
-      width: '260px',
+      width: '280px',
       height: 'calc(100vh - 50px)',
       backgroundColor: '#ffffff',
       zIndex: 41,
-      padding: '1.5rem',
+      padding: '1.75rem 1.25rem',
       display: 'flex',
       flexDirection: 'column' as const,
-      gap: '1.5rem',
+      gap: '1.25rem',
       overflowY: 'auto' as const,
       transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
-      transition: 'transform 0.3s ease-in-out',
-      borderRight: '1px solid #e2e8f0',
+      transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      borderRight: '1px solid #f1f5f9',
+      boxShadow: '4px 0 24px rgba(0,0,0,0.06)',
     },
-    // --- CONTENT STYLES (Your Code - Unchanged) ---
     searchWrapper: {
       position: 'relative' as const,
-      marginBottom: '0.5rem',
-      width: '100%', 
+      marginBottom: '0.25rem',
+      width: '100%',
     },
     searchInput: {
       width: '100%',
-      padding: '0.6rem 1rem 0.6rem 2.2rem',
-      fontSize: '0.9rem',
-      border: '1px solid #e5e7eb',
-      borderRadius: '4px',
-      backgroundColor: '#f9fafb',
-      color: '#374151',
+      padding: '0.6rem 1rem 0.6rem 2.4rem',
+      fontSize: '0.875rem',
+      border: '1px solid #e2e8f0',
+      borderRadius: '9999px',
+      backgroundColor: '#f8fafc',
+      color: '#334155',
       outline: 'none',
       boxSizing: 'border-box' as const,
+      transition: 'all 0.3s ease',
     },
     searchIcon: {
       position: 'absolute' as const,
-      left: '10px',
+      left: '12px',
       top: '50%',
       transform: 'translateY(-50%)',
-      color: '#9ca3af',
-      fontSize: '0.8rem',
+      color: '#94a3b8',
+      fontSize: '0.75rem',
+      pointerEvents: 'none' as const,
     },
     sectionTitle: {
-      fontSize: '0.95rem',
-      fontWeight: 700,
-      color: '#0891b2', 
-      marginBottom: '-0.5rem',
-      paddingLeft: '10px',
+      fontSize: '0.7rem',
+      fontWeight: 800,
+      color: '#94a3b8',
+      paddingLeft: '0.75rem',
       textTransform: 'uppercase' as const,
-      letterSpacing: '0.05em',
+      letterSpacing: '0.1em',
+      marginBottom: '-0.25rem',
     },
     listContainer: {
       display: 'flex',
       flexDirection: 'column' as const,
-      position: 'relative' as const,
-      borderLeft: '2px solid #e5e7eb',
-      marginLeft: '10px', 
-      paddingTop: '0.5rem',
-      paddingBottom: '0.5rem',
+      gap: '0.2rem',
     },
     listItem: {
-      position: 'relative' as const,
-      paddingLeft: '1.25rem',
-      paddingTop: '0.4rem',
-      paddingBottom: '0.4rem',
-      fontSize: '0.9rem',
-      color: '#6b7280',
+      padding: '0.6rem 0.875rem',
+      fontSize: '0.875rem',
+      color: '#64748b',
       textDecoration: 'none',
       display: 'block',
       transition: 'all 0.2s ease',
-      lineHeight: '1.4',
-      wordWrap: 'break-word' as const,
-    },
-    itemBranch: {
-      position: 'absolute' as const,
-      left: '0',
-      top: '50%',
-      width: '10px',
-      height: '2px',
-      backgroundColor: '#e5e7eb',
-      transform: 'translateY(-50%)',
+      lineHeight: '1.45',
+      wordBreak: 'break-word' as const,
+      borderRadius: '0.625rem',
+      fontWeight: 500,
     },
     activeItem: {
       color: '#0891b2',
-      fontWeight: 600,
+      fontWeight: 700,
+      backgroundColor: '#ecfeff',
+      borderRadius: '0.625rem',
+    },
+    noResults: {
+      padding: '0.5rem 0.875rem',
+      fontSize: '0.8rem',
+      color: '#94a3b8',
+      fontStyle: 'italic' as const,
     },
   };
 
-  // Helper to render content to avoid duplication
   const SidebarContent = () => (
     <>
       <div style={styles.searchWrapper}>
@@ -151,10 +144,20 @@ const Sidebar = ({ posts, activePostId, searchQuery, setSearchQuery, isOpen, onC
           style={styles.searchInput}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = '#06b6d4';
+            e.currentTarget.style.backgroundColor = '#ffffff';
+            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(6, 182, 212, 0.12)';
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = '#e2e8f0';
+            e.currentTarget.style.backgroundColor = '#f8fafc';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
         />
       </div>
 
-      <h3 style={styles.sectionTitle}>Posts</h3>
+      <p style={styles.sectionTitle}>Posts</p>
 
       <div style={styles.listContainer}>
         {sidebarFilteredPosts.map((post) => {
@@ -163,30 +166,31 @@ const Sidebar = ({ posts, activePostId, searchQuery, setSearchQuery, isOpen, onC
             <Link
               key={post.id}
               to={`/posts/${post.id}`}
-              onClick={isMobile && onClose ? onClose : undefined} 
+              onClick={isMobile && onClose ? onClose : undefined}
               style={{
                 ...styles.listItem,
                 ...(isActive ? styles.activeItem : {}),
               }}
               onMouseEnter={(e) => {
-                if (!isActive) e.currentTarget.style.color = '#0891b2';
+                if (!isActive) {
+                  e.currentTarget.style.color = '#0891b2';
+                  e.currentTarget.style.backgroundColor = '#f0fdfe';
+                }
               }}
               onMouseLeave={(e) => {
-                if (!isActive) e.currentTarget.style.color = '#6b7280';
+                if (!isActive) {
+                  e.currentTarget.style.color = '#64748b';
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
               }}
             >
-              <span style={{
-                ...styles.itemBranch,
-                backgroundColor: isActive ? '#0891b2' : '#e5e7eb'
-              }}></span>
               {post.title}
             </Link>
           );
         })}
+
         {sidebarFilteredPosts.length === 0 && (
-           <div style={{ paddingLeft: '1.25rem', fontSize: '0.85rem', color: '#9ca3af' }}>
-             No results
-           </div>
+          <div style={styles.noResults}>No results found</div>
         )}
       </div>
     </>
@@ -203,7 +207,6 @@ const Sidebar = ({ posts, activePostId, searchQuery, setSearchQuery, isOpen, onC
       </style>
 
       {isMobile ? (
-        // MOBILE: Render Overlay + Drawer (using new mobile styles)
         <>
           {isOpen && <div style={styles.mobileOverlay} onClick={onClose}></div>}
           <aside style={styles.mobileContainer} className="sidebar-scroll-container">
@@ -211,7 +214,6 @@ const Sidebar = ({ posts, activePostId, searchQuery, setSearchQuery, isOpen, onC
           </aside>
         </>
       ) : (
-        // DESKTOP: Render your Original Sticky Sidebar
         <aside style={styles.container} className="sidebar-scroll-container">
           <SidebarContent />
         </aside>

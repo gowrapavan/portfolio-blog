@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 // --- CONFIGURATION ---
 // Replace this with your actual deployed domain
-const BASE_URL = 'https://gowrapavan.com'; 
+const BASE_URL = 'https://gowrapavan.netlify.app/'; 
 
 // 1. Static Routes (Matching your App.tsx)
 const staticRoutes = [
